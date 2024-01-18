@@ -1,5 +1,6 @@
-# GTA DragonFF - Blender scripts to edit basic GTA formats
-# Copyright (C) 2019  Parik
+# DemonFF - Blender scripts to edit basic GTA formats to work in conjunction with SAMP/open.mp
+# 2023 - 2024 SpicyBung
+# A fork of Pariks GTA DragonFF for Blender rewritten for SAMP(C)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
 import bpy
 from .gui import gui
 from .ops import map_importer
@@ -21,13 +23,13 @@ from .ops import map_importer
 from bpy.utils import register_class, unregister_class
 
 bl_info = {
-    "name": "GTA SAMP DragonFF",
+    "name": "GTA DemonFF",
     "author": "Parik(fork by SpicyBung)",
     "version": (0, 0, 2),
     "blender": (2, 80, 0),
     "category": "Import-Export",
     "location": "File > Import/Export",
-    "description": "Importer and Exporter for GTA SAMP Format"
+    "description": "Importer and Exporter for GTA SAMP/open.mp Format"
 }
 
 

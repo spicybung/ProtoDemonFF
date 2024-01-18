@@ -1,6 +1,5 @@
-# DemonFF - Blender scripts to edit basic GTA formats to work in conjunction with SAMP/open.mp
-# 2023 - 2024 SpicyBung
-# A fork of Pariks GTA DragonFF for Blender rewritten for SAMP(C)
+# GTA DragonFF - Blender scripts to edit basic GTA formats
+# Copyright (C) 2019  Parik
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +13,12 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# This document specifies most of renderware era GTAs IPL/IDE data structures,
+# taken directly from GTA wikis, sources available in each section.
+# Sections listed in "Not present" were left out either because they seemed too
+# complex or not useful enough to even bother with. Or they're not sufficiently
+# documented.
 
 from collections import namedtuple
 from ..ops.importer_common import game_version

@@ -9,8 +9,8 @@ from ..ops import dff_exporter, dff_importer, col_importer
 class EXPORT_OT_dff(bpy.types.Operator, ExportHelper):
     
     bl_idname           = "export_dff.scene"
-    bl_description      = "Export a Renderware DFF or COL File for use in conjunction with SAMP"
-    bl_label            = "DemonFF DFF (.dff)"
+    bl_description      = "Export a Renderware DFF or COL File"
+    bl_label            = "DragonFF DFF (.dff)"
     filename_ext        = ".dff"
 
     filepath            : bpy.props.StringProperty(name="File path",
@@ -120,28 +120,7 @@ class EXPORT_OT_dff(bpy.types.Operator, ExportHelper):
                                  self.custom_version[4],
                                  self.custom_version[6]),
                 0)
-
-
-    #######################################################
-    def add_extension_and_collision_data(file_path):
-        try:
-            # Open the DFF file in read/write mode
-            with open(file_path, "r+b") as dff_file:
-                # Move to the end of the file
-                dff_file.seek(0, 2)
-
-                print("Extension section created at the end of the file.")
-
-                # Save the collision data beneath the specified values within the Extension section
-                collision_values = b'\x00\x00\x73\x61\x6D\x70'  # Replace with collision data values
-                dff_file.write(collision_values)
-
-                print("Collision data written underneath the specified values.")
-
-        except Exception as e:
-            print("Error:", e)
-            # Handle errors as needed
-
+    
     #######################################################
     def execute(self, context):
 
@@ -150,30 +129,31 @@ class EXPORT_OT_dff(bpy.types.Operator, ExportHelper):
                 self.report({"ERROR_INVALID_INPUT"}, "Invalid RW Version")
                 return {'FINISHED'}
 
-        start = time.time()
+        start = time.time ()
         try:
             dff_exporter.export_dff(
                 {
-                    "file_name": self.filepath,
-                    "directory": self.directory,
-                    "selected": self.only_selected,
-                    "mass_export": self.mass_export,
-                    "version": self.get_selected_rw_version(),
-                    "export_coll": self.export_coll,
-                    "export_frame_names": self.export_frame_names
+                    "file_name"          : self.filepath,
+                    "directory"          : self.directory,
+                    "selected"           : self.only_selected,
+                    "mass_export"        : self.mass_export,
+                    "version"            : self.get_selected_rw_version(),
+                    "export_coll"        : self.export_coll,
+                    "export_frame_names" : self.export_frame_names
                 }
             )
             self.report({"INFO"}, f"Finished export in {time.time() - start:.2f}s")
 
-            if self.export_coll:
-                file_path = self.filepath  # Assuming filepath is the DFF file path
-
         except dff_exporter.DffExportException as e:
             self.report({"ERROR"}, str(e))
 
+        # Save settings of the export in scene custom properties for later
+        context.scene['dragonff_imported_version'] = self.export_version
+        context.scene['dragonff_custom_version']   = self.custom_version
+            
         return {'FINISHED'}
 
-    ######################################################
+    #######################################################
     def invoke(self, context, event):
         if 'dragonff_imported_version' in context.scene:
             self.export_version = context.scene['dragonff_imported_version']
@@ -187,8 +167,8 @@ class EXPORT_OT_dff(bpy.types.Operator, ExportHelper):
 class IMPORT_OT_dff(bpy.types.Operator, ImportHelper):
     
     bl_idname      = "import_scene.dff"
-    bl_description = 'Import a Renderware DFF or COL File for use in conjunction with SAMP'
-    bl_label       = "DemonFF DFF (.dff)"
+    bl_description = 'Import a Renderware DFF or COL File'
+    bl_label       = "DragonFF DFF (.dff)"
 
     filter_glob   : bpy.props.StringProperty(default="*.dff;*.col",
                                               options={'HIDDEN'})

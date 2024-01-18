@@ -1,23 +1,21 @@
 import bpy
-import struct
 from bpy_extras.io_utils import ExportHelper
 from ..ops import col_exporter
-
 
 #######################################################
 class EXPORT_OT_col(bpy.types.Operator, ExportHelper):
     
     bl_idname      = "export_col.scene"
-    bl_description = "Export a SAMP Collision File"
-    bl_label       = "DragonFF Collision for SAMP/open.mp(.col)"
-    filename_ext   = ".col.samp"
+    bl_description = "Export a GTA III/VC/SA Collision File"
+    bl_label       = "DragonFF Collision (.col)"
+    filename_ext   = ".col"
 
     filepath       : bpy.props.StringProperty(name="File path",
                                               maxlen=1024,
                                               default="",
                                               subtype='FILE_PATH')
     
-    filter_glob    : bpy.props.StringProperty(default="*.col.samp",
+    filter_glob    : bpy.props.StringProperty(default="*.col",
                                               options={'HIDDEN'})
     
     directory      : bpy.props.StringProperty(maxlen=1024,
@@ -33,7 +31,7 @@ class EXPORT_OT_col(bpy.types.Operator, ExportHelper):
         items =
         (
             ('1', "GTA 3/VC (COLL)", "Grand Theft Auto 3 and Vice City (PC) - Version 1"),
-            ('3', "GTA SA/MP (COL3)", "Grand Theft Auto SA (PC/Xbox) - Coll Version 3"),
+            ('3', "GTA SA PC/Xbox (COL3)", "Grand Theft Auto SA (PC/Xbox) - Version 3"),
             ('2', "GTA SA PS2 (COL2)", "Grand Theft Auto SA (PS2) - Version 2")
         ),
         name = "Version Export"
@@ -46,23 +44,12 @@ class EXPORT_OT_col(bpy.types.Operator, ExportHelper):
         layout.prop(self, "only_selected")
         return None
 
-
-    #######################################################
-    def get_dff_objects():
-        # Retrieve DFF objects here, based on your scene structure
-        # For example:
-        dff_objects = [obj for obj in bpy.context.scene.objects if obj.type == 'COLLISION' and obj.name.endswith('.dff')]
-        return dff_objects
-
     #######################################################
     def execute(self, context):
         
-
-        file_path = "/path/to/each/dff_file"
-
         col_exporter.export_col(
             {
-                "file_name"      : file_path,
+                "file_name"      : self.filepath,
                 "version"        : int(self.export_version),
                 "collection"     : None,
                 "memory"         : False,

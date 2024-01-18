@@ -49,11 +49,8 @@ TVector    = namedtuple("TVector", "x y z")
         
 #######################################################
 class Sections:
-    
-    version = 1
 
-    #######################################################
-    
+    version = 1
 
     #######################################################
     def init_sections(version):
@@ -91,18 +88,16 @@ class Sections:
         }
 
     #######################################################
-    
-    @staticmethod
-    def compress_vertices(vertices):
-        return [Sections.compress_vertex(vertex) for vertex in vertices]
+    def compress_vertices(self, vertices):
+        compressed_vertices = []
+        for vertex in vertices:
+            compressed_vertex = self.TVertex._make(int(coord * 128) for coord in vertex)
+            compressed_vertices.append(compressed_vertex)
 
-    @staticmethod
-    def compress_vertex(vertex):
-     return namedtuple('TVertex', 'x y z')(*[int(i * 128) for i in vertex])
-
+        return compressed_vertices
             
     #######################################################
-    def __read_format(format, data, offset):
+    def __read_format(self, format, data, offset):
 
         output = []
 
@@ -115,9 +110,9 @@ class Sections:
             # Custom format: Surface
             elif char == 'S':
                 output.append(
-                    Sections.read_section(TSurface, data, offset)
+                    self.read_section(self.TSurface, data, offset)
                 )
-                offset += Sections.size(TSurface)
+                offset += self.size(self.TSurface)
 
             else:
                 output.append(unpack_from(char, data, offset)[0])
@@ -296,15 +291,12 @@ class coll:
     def __read_col(self):
         model = ColModel()
         pos = self._pos
-        header_format = namedtuple("header_format",
-                                   [
-                                       "magic_number",
-                                       "file_size",
-                                       "model_name",
-                                       "model_id"
-                                   ]
-        )
+        header_format = namedtuple("header_format", ["magic_number", "file_size", "model_name", "model_id"])
         header = header_format._make(self.__read_struct("4sI22sH"))
+
+        # Modify the magic number (subtracting 1 from the first digit)
+        modified_value = (int.from_bytes(header.magic_number, 'big') - 1).to_bytes(4, 'big')
+        header = header._replace(magic_number=modified_value)
 
         magic_number = header.magic_number.decode("ascii")
 
@@ -390,16 +382,18 @@ class coll:
     def __write_col_new(self, model):
         data = b''
 
+        # Calculate flags based on model properties
         flags = 0
         flags |= 2 if model.spheres or model.cubes or model.mesh_faces else 0
         flags |= 16 if model.shadow_faces and model.version >= 3 else 0
-        
+
+        # Calculate header length based on model version
         header_len = 104
         header_len += 12 if model.version >= 3 else 0
         header_len += 4 if model.version >= 4 else 0
 
         offsets = []
-        
+
         # Spheres
         offsets.append(len(data) + header_len)
         data += self.__write_block(TSphere, model.spheres, False)
@@ -408,45 +402,33 @@ class coll:
         offsets.append(len(data) + header_len)
         data += self.__write_block(TBox, model.cubes, False)
 
-        offsets.append(0) # TODO: Cones
-        
+        offsets.append(0)  # TODO: Cones
+
         # Vertices
         offsets.append(len(data) + header_len)
-        data += self.__write_block(TVertex,
-                                   Sections.compress_vertices(model.mesh_verts),
-                                   False)
-        
+        compressed_verts = self.compress_vertices(model.mesh_verts)
+        data += self.__write_block(TVertex, compressed_verts, False)
+
         # Faces
         offsets.append(len(data) + header_len)
         data += self.__write_block(TFace, model.mesh_faces, False)
 
-        offsets.append(0) # Triangle Planes (what are these?)
-        
-        # Shadow Mesh
+        offsets.append(0)  # Triangle Planes (what are these?)
 
+        # Shadow Mesh (only after version 3)
         if model.version >= 3:
+            # Shadow Vertices
+            offsets.append(len(data) + header_len)
+            compressed_shadow_verts = self.compress_vertices(model.shadow_verts)
+            data += self.__write_block(TVertex, compressed_shadow_verts, False)
 
             # Shadow Vertices
             offsets.append(len(data) + header_len)
-            data += self.__write_block(TVertex,
-                                       Sections.compress_vertices(
-                                           model.shadow_verts),
-                                       False)
-            
-            # Shadow Vertices
-            offsets.append(len(data) + header_len)
-            data += self.__write_block(TFace,
-                                       model.shadow_faces,
-                                       False)
+            data += self.__write_block(TFace, model.shadow_faces, False)
 
         # Write Header
-        header_data = pack("<HHHBxIIIIIII",
-                            len(model.spheres),
-                            len(model.cubes),
-                            len(model.mesh_faces),
-                            len(model.lines),
-                            flags,
-                            *offsets[:6])
+        header_data = pack("<HHHBxIIIIIII", len(model.spheres), len(model.cubes),
+                           len(model.mesh_faces), len(model.lines), flags, *offsets[:6])
 
         # Shadow Mesh (only after version 3)
         if model.version >= 3:

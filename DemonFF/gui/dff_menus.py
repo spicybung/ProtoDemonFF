@@ -6,7 +6,7 @@ from .col_ot import EXPORT_OT_col
 class MATERIAL_PT_dffMaterials(bpy.types.Panel):
 
     bl_idname      = "MATERIAL_PT_dffMaterials"
-    bl_label       = "DemonFF - Export Material"
+    bl_label       = "DragonFF - Export Material"
     bl_space_type  = "PROPERTIES"
     bl_region_type = "WINDOW"
     bl_context     = "material"
@@ -175,28 +175,28 @@ class MATERIAL_PT_dffMaterials(bpy.types.Panel):
 
 #######################################################@
 class DFF_MT_ExportChoice(bpy.types.Menu):
-    bl_label = "DemonFF"
+    bl_label = "DragonFF"
 
     def draw(self, context):
         self.layout.operator(EXPORT_OT_dff.bl_idname,
-                             text="DemonFF DFF (.dff)")
+                             text="DragonFF DFF (.dff)")
         self.layout.operator(EXPORT_OT_col.bl_idname,
-                             text="DemonFF Collision (.col)")
+                             text="DragonFF Collision (.col)")
             
         
 #######################################################
 def import_dff_func(self, context):
-    self.layout.operator(IMPORT_OT_dff.bl_idname, text="DemonFF DFF (.dff)")
+    self.layout.operator(IMPORT_OT_dff.bl_idname, text="DragonFF DFF (.dff)")
 
 #######################################################
 def export_dff_func(self, context):
-    self.layout.menu("DFF_MT_ExportChoice", text="DemonFF")
+    self.layout.menu("DFF_MT_ExportChoice", text="DragonFF")
 
 #######################################################
 class OBJECT_PT_dffObjects(bpy.types.Panel):
 
     bl_idname      = "OBJECT_PT_dffObjects"
-    bl_label       = "DemonFF - Export Object"
+    bl_label       = "DragonFF - Export Object"
     bl_space_type  = "PROPERTIES"
     bl_region_type = "WINDOW"
     bl_context     = "object"
@@ -267,16 +267,6 @@ class OBJECT_PT_dffObjects(bpy.types.Panel):
         settings = context.object.dff
 
         box = layout.box()
-        box = layout.box()
-        box.prop(settings, "pipeline", text="Pipeline")
-        if settings.pipeline == 'CUSTOM':
-            col = box.column()
-            
-            col.alert = not self.validate_pipeline(settings.custom_pipeline)
-            icon = "ERROR" if col.alert else "NONE"
-
-            col.prop(settings, "custom_pipeline", icon=icon, text="Custom Pipeline")
-        
         box.label(text="Material Surface")
         
         box.prop(settings, "col_material", text="Material")
@@ -299,7 +289,7 @@ class OBJECT_PT_dffObjects(bpy.types.Panel):
                 self.draw_mesh_menu(context)
 
         elif settings.type == 'COL':
-            if context.object.type == 'MESH':
+            if context.object.type == 'EMPTY':
                 self.draw_col_menu(context)
     
     #######################################################
@@ -405,11 +395,6 @@ class DFFObjectProps(bpy.types.PropertyGroup):
             (
                 '0x53F2009A',
                 'Night Vertex Colors',
-                'Night Vertex Colors (0x53F2009C)'
-            ),
-            (
-                '0x03',
-                'Extension',
                 'Night Vertex Colors (0x53F2009C)'
             ),
             ('CUSTOM', 'Custom Pipeline', 'Set a different pipeline')
