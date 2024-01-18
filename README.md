@@ -18,9 +18,9 @@ DemonFF is a powerful Blender addon designed to enhance your workflow by providi
 
 - **Collision Editing**: Streamline collision model editing with DemonFF's dedicated tools for managing spheres, boxes, vertices, and faces.
 
-- **Custom Section IDs**: DemonFF supports Rockstar's custom section IDs, allowing you to work with specific RW plugins seamlessly.
+- **Custom Section IDs**: DemonFF supports Rockstar's custom section IDs, allowing you to work with specific RW plugins seamlessly As well, it supports SAMP's custom section ID.
 
-- **SAMP/open.mp Compatibility**: DemonFF is designed for compatibility with San Andreas Multiplayer (SAMP) and open.mp, allowing you to export models and collision for use in multiplayer environments.
+- **SAMP/open.mp Compatibility**: DemonFF is designed for compatibility with San Andreas Multiplayer (SAMP) and open.mp, allowing you to export models and collision for use in GTA multiplayer environments.
 
 ## Getting Started
 
