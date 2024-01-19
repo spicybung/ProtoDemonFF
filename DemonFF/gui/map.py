@@ -59,7 +59,7 @@ class DFFSceneProps(bpy.types.PropertyGroup):
 #######################################################
 class MapImportPanel(bpy.types.Panel):
     """Creates a Panel in the scene context of the properties editor"""
-    bl_label = "DragonFF - Map Import"
+    bl_label = "DemonF - Map Import"
     bl_idname = "SCENE_PT_layout"
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'

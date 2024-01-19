@@ -7,7 +7,7 @@ class EXPORT_OT_col(bpy.types.Operator, ExportHelper):
     
     bl_idname      = "export_col.scene"
     bl_description = "Export a GTA III/VC/SA Collision File"
-    bl_label       = "DragonFF Collision (.col)"
+    bl_label       = "DemonFF Collision (.col)"
     filename_ext   = ".col"
 
     filepath       : bpy.props.StringProperty(name="File path",

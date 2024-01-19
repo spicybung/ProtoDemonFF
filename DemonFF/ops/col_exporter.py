@@ -228,7 +228,7 @@ def export_col(options):
                 
             except ValueError:
                 pass
-            
+
             output += col_exporter.export_col(name)
 
         if options['memory']:

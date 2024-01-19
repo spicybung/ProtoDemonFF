@@ -10,7 +10,7 @@ class EXPORT_OT_dff(bpy.types.Operator, ExportHelper):
     
     bl_idname           = "export_dff.scene"
     bl_description      = "Export a Renderware DFF or COL File"
-    bl_label            = "DragonFF DFF (.dff)"
+    bl_label            = "DemonFF DFF (.dff)"
     filename_ext        = ".dff"
 
     filepath            : bpy.props.StringProperty(name="File path",
@@ -168,7 +168,7 @@ class IMPORT_OT_dff(bpy.types.Operator, ImportHelper):
     
     bl_idname      = "import_scene.dff"
     bl_description = 'Import a Renderware DFF or COL File'
-    bl_label       = "DragonFF DFF (.dff)"
+    bl_label       = "DemonFF DFF (.dff)"
 
     filter_glob   : bpy.props.StringProperty(default="*.dff;*.col",
                                               options={'HIDDEN'})

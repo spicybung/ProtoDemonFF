@@ -6,7 +6,7 @@ from .col_ot import EXPORT_OT_col
 class MATERIAL_PT_dffMaterials(bpy.types.Panel):
 
     bl_idname      = "MATERIAL_PT_dffMaterials"
-    bl_label       = "DragonFF - Export Material"
+    bl_label       = "DemonFF - Export Material"
     bl_space_type  = "PROPERTIES"
     bl_region_type = "WINDOW"
     bl_context     = "material"
@@ -175,28 +175,28 @@ class MATERIAL_PT_dffMaterials(bpy.types.Panel):
 
 #######################################################@
 class DFF_MT_ExportChoice(bpy.types.Menu):
-    bl_label = "DragonFF"
+    bl_label = "DemonFF"
 
     def draw(self, context):
         self.layout.operator(EXPORT_OT_dff.bl_idname,
-                             text="DragonFF DFF (.dff)")
+                             text="DemonFF DFF (.dff)")
         self.layout.operator(EXPORT_OT_col.bl_idname,
-                             text="DragonFF Collision (.col)")
+                             text="DemonFF Collision (.col)")
             
         
 #######################################################
 def import_dff_func(self, context):
-    self.layout.operator(IMPORT_OT_dff.bl_idname, text="DragonFF DFF (.dff)")
+    self.layout.operator(IMPORT_OT_dff.bl_idname, text="DemonFF DFF (.dff)")
 
 #######################################################
 def export_dff_func(self, context):
-    self.layout.menu("DFF_MT_ExportChoice", text="DragonFF")
+    self.layout.menu("DFF_MT_ExportChoice", text="DemonFF")
 
 #######################################################
 class OBJECT_PT_dffObjects(bpy.types.Panel):
 
     bl_idname      = "OBJECT_PT_dffObjects"
-    bl_label       = "DragonFF - Export Object"
+    bl_label       = "DemonFF - Export Object"
     bl_space_type  = "PROPERTIES"
     bl_region_type = "WINDOW"
     bl_context     = "object"

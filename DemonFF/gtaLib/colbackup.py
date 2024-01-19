@@ -226,7 +226,7 @@ class coll:
         sphere_count, box_count, face_count, line_count, flags, \
             spheres_offset, box_offset, lines_offset, verts_offset, \
             faces_offset, triangles_offset = \
-            unpack_from("<HHHBxIIIIIII", self._data, self.__incr(36))
+            unpack_from("<HHHBxIIIIIII", 0x253F2FF, self.__incr(36))
 
         model.flags = flags
         
@@ -289,12 +289,15 @@ class coll:
     def __read_col(self):
         model = ColModel()
         pos = self._pos
-        header_format = namedtuple("header_format", ["magic_number", "file_size", "model_name", "model_id"])
+        header_format = namedtuple("header_format",
+                                   [
+                                       "magic_number",
+                                       "file_size",
+                                       "model_name",
+                                       "model_id"
+                                   ]
+        )
         header = header_format._make(self.__read_struct("4sI22sH"))
-
-        # Modify the magic number (subtracting 1 from the first digit)
-        modified_value = (int.from_bytes(header.magic_number, 'big') - 1).to_bytes(4, 'big')
-        header = header._replace(magic_number=modified_value)
 
         magic_number = header.magic_number.decode("ascii")
 
@@ -410,7 +413,7 @@ class coll:
         offsets.append(len(data) + header_len)
         data += self.__write_block(TFace, model.mesh_faces, False)
 
-        offsets.append(0) # Triangle Planes (Bobby, h'what are these?)
+        offsets.append(0) # Triangle Planes (what are these?)
         
         # Shadow Mesh
 
@@ -430,20 +433,23 @@ class coll:
                                        False)
 
         # Write Header
-        header_data = bytearray(pack("<BBHHxBBBBIIB",  # (The original value for the header was incorrect - its too many bytes, what the heck)
-                                len(model.spheres),
-                                len(model.cubes),
-                                len(model.mesh_faces),
-                                len(model.lines),
-                                flags,
-                                *offsets[:6])) 
+        header_data = pack("<HHHBxIIIIIII",
+                            len(model.spheres),
+                            len(model.cubes),
+                            len(model.mesh_faces),
+                            len(model.lines),
+                            flags,
+                            *offsets[:6])
 
-        
         # Shadow Mesh (only after version 3)
         if model.version >= 3:
             header_data += pack("<III", len(model.shadow_faces), *offsets[6:])
 
-        return header_data + data
+        # Your specific header bytes
+        custom_header = bytes.fromhex("FF F2 53 02 FD 00 00 00 FF FF 03 18 43 4F 4C 33 90 00 00 00 73 61 6D 70")
+
+
+        return custom_header + header_data + data
     
     #######################################################
     def __write_col(self, model):
@@ -456,19 +462,12 @@ class coll:
         
         data = Sections.write_section(TBounds, model.bounds) + data
 
-
-        custom_header = bytes.fromhex("73 61 6D 70")
-        header_size = 40
-        header = [
-            ("COL" + ('L' if model.version == 1 else str(model.version))).encode(
-                "ascii"
-            ),
-            len(data) + header_size,
-            custom_header,
-            model.model_id
-        ]
-
-        return pack("4sI22sH", *header) + data
+        # Your specific header bytes
+        custom_header = bytes.fromhex("FF F2 53 02 FD 00 00 00 FF FF 03 18 43 4F 4C 33 90 00 00 00 73 61 6D 70")
+        
+    
+        # Concatenate custom header and the data
+        return custom_header + data
             
     #######################################################
     def write_memory(self):
