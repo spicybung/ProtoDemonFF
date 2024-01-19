@@ -293,10 +293,6 @@ class coll:
         header_format = namedtuple("header_format", ["magic_number", "file_size", "model_name", "model_id"])
         header = header_format._make(self.__read_struct("4sI22sH"))
 
-        # Modify the magic number (subtracting 1 from the first digit)
-        modified_value = (int.from_bytes(header.magic_number, 'big') - 1).to_bytes(4, 'big')
-        header = header._replace(magic_number=modified_value)
-
         magic_number = header.magic_number.decode("ascii")
 
         model.model_name = header.model_name[:strlen(header.model_name)].decode(
