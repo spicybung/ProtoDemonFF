@@ -88,4 +88,4 @@ class MapImportPanel(bpy.types.Panel):
         layout.prop(settings, 'dff_folder')
 
         row = layout.row()
-        row.operator("scene.dragonff_map_import")
+        row.operator("scene.demonff_map_import")

@@ -148,17 +148,17 @@ class EXPORT_OT_dff(bpy.types.Operator, ExportHelper):
             self.report({"ERROR"}, str(e))
 
         # Save settings of the export in scene custom properties for later
-        context.scene['dragonff_imported_version'] = self.export_version
-        context.scene['dragonff_custom_version']   = self.custom_version
+        context.scene['demonff_imported_version'] = self.export_version
+        context.scene['demonff_custom_version']   = self.custom_version
             
         return {'FINISHED'}
 
     #######################################################
     def invoke(self, context, event):
-        if 'dragonff_imported_version' in context.scene:
-            self.export_version = context.scene['dragonff_imported_version']
-        if 'dragonff_custom_version' in context.scene:
-            self.custom_version = context.scene['dragonff_custom_version']
+        if 'demonff_imported_version' in context.scene:
+            self.export_version = context.scene['demonff_imported_version']
+        if 'demonff_custom_version' in context.scene:
+            self.custom_version = context.scene['demonff_custom_version']
         
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
@@ -294,10 +294,10 @@ class IMPORT_OT_dff(bpy.types.Operator, ImportHelper):
 
                 # Set imported version to scene settings for use later in export.
                 if version in ['0x33002', '0x34003', '0x36003']:
-                    context.scene['dragonff_imported_version'] = version
+                    context.scene['demonff_imported_version'] = version
                 else:
-                    context.scene['dragonff_imported_version'] = "custom"
-                    context.scene['dragonff_custom_version'] = "{}.{}.{}.{}".format(
+                    context.scene['demonff_imported_version'] = "custom"
+                    context.scene['demonff_custom_version'] = "{}.{}.{}.{}".format(
                         *(version[i] for i in [2,3,4,6])
                     ) #convert hex to x.x.x.x format
                 

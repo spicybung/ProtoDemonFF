@@ -24,7 +24,7 @@ from ..ops import dff_importer
 #######################################################
 class Map_Import_Operator(bpy.types.Operator):
     """Tooltip"""
-    bl_idname = "scene.dragonff_map_import"
+    bl_idname = "scene.demonff_map_import"
     bl_label = "Import map section"
 
     _timer = None

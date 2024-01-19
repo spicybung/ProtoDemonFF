@@ -59,14 +59,14 @@ class EXPORT_OT_col(bpy.types.Operator, ExportHelper):
         )
 
         # Save settings of the export in scene custom properties for later
-        context.scene['dragonff_imported_version_col'] = self.export_version
+        context.scene['demonff_imported_version_col'] = self.export_version
             
         return {'FINISHED'}
 
     #######################################################
     def invoke(self, context, event):
-        if 'dragonff_imported_version_col' in context.scene:
-            self.export_version = context.scene['dragonff_imported_version_col']
+        if 'demonff_imported_version_col' in context.scene:
+            self.export_version = context.scene['demonff_imported_version_col']
         
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
