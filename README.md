@@ -6,7 +6,7 @@
 
 DemonFF is a Blender addon designed to provide ease of mind by providing SA-MP functionality to Parik27s DragonFF for working with Renderware DFF files. Whether you're creating custom models or working with GTA game assets, DemonFF simplifies the process of exporting and importing DFF files.
 
-What is a .DFF?: DFF files house object data, and are used by Renderware, as well as Rockstar itself up until at least Grand Theft Auto 4. You'll find .DFF(Dive File Format) files in every 3D Universe GTA game you can think of. It houses the data structure for models such as buildings(has collision, mesh faces), or a "texture" of a spray tag on the side of a building(which may really be a model with empty collision, if it's not UV Mapped). .DFF files house the objects data which includes model ID, name, textures, collision, 2dfx, etc. As you can see, they're quite important.
+What is a .DFF?: DFF files house object data, and are used by Renderware, as well as Rockstar itself up in most of its games since Grand Theft Auto III, until at least Grand Theft Auto IV. You'll find .DFF(Dive File Format) files in every 3D Universe GTA game you can think of. It houses the data structure for models such as buildings(has collision, mesh faces), or a "texture" of a spray tag on the side of a building(which may really be a model with empty collision, if it's not UV Mapped). .DFF files house the objects data which includes model ID, name, textures, collision, 2dfx, etc. As you can see, they're quite important.
 
 **Note:** DemonFF is a fork of Pariks GTA DragonFF, with additions and small rewrites.
 
