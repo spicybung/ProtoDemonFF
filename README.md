@@ -4,9 +4,9 @@
 
 ## Introduction
 
-DemonFF is a Blender addon designed to enhance your SAMP/open.mp workflow by providing advanced features for working with Renderware DFF files. Whether you're creating custom models or working with GTA game assets, DemonFF simplifies the process of exporting and importing DFF files.
+DemonFF is a powerful Blender addon designed to enhance your workflow by providing advanced features for working with Renderware DFF files. Whether you're creating custom models or working with GTA game assets, DemonFF simplifies the process of exporting and importing DFF files.
 
-**Note:** DemonFF is a fork of Parik27's GTA DragonFF addon, with significant rewrites.
+**Note:** DemonFF is a fork of Pariks GTA DragonFF, with significant rewrites.
 
 ## Features
 
@@ -18,9 +18,9 @@ DemonFF is a Blender addon designed to enhance your SAMP/open.mp workflow by pro
 
 - **Collision Editing**: Streamline collision model editing with DemonFF's dedicated tools for managing spheres, boxes, vertices, and faces.
 
-- **Custom Section IDs**: DemonFF supports Rockstar's custom section IDs, allowing you to work with specific RW plugins seamlessly. As well, it also supports SAMP's custom section ID.
+- **Custom Section IDs**: DemonFF supports Rockstar's custom section IDs, allowing you to work with specific RW plugins seamlessly.
 
-- **SAMP/open.mp Compatibility**: DemonFF is designed for compatibility with San Andreas Multiplayer (SAMP) and open.mp, allowing you to export models and collision for use in GTA multiplayer environments.
+- **SAMP/open.mp Compatibility**: DemonFF is designed for compatibility with San Andreas Multiplayer (SAMP) and open.mp, allowing you to export models and collision for use in multiplayer environments.
 
 ## Getting Started
 
@@ -37,6 +37,10 @@ DemonFF is a Blender addon designed to enhance your SAMP/open.mp workflow by pro
 2. Import or create your 3D model.
 3. Use DemonFF tools to edit collision models, export, and import DFF files.
 
+## Documentation
+
+For detailed instructions and documentation, visit the [Wiki](https://github.com/spicybung/DemonFF/wiki).
+
 ## Contributing
 
 Contributions are welcome! If you have suggestions, bug reports, or want to contribute code, please check out the [Contributing Guidelines](CONTRIBUTING.md).
@@ -48,7 +52,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - Special thanks to the Blender community and contributors.
-- Inspired by the Renderware engine and the GTA multiplayer & modding community.
+- Inspired by the Renderware engine and GTA modding community.
 - Parik27 for his DragonFF Blender Add-on, which without would have made this impossible.
 
 
