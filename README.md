@@ -39,14 +39,6 @@ What is a .DFF?: DFF files house object data, and are used by Renderware, as wel
 2. Import or create your 3D model.
 3. Use DemonFF tools to edit collision models, export, and import DFF files.
 
-## Documentation
-
-For detailed instructions and documentation, visit the [Wiki](https://github.com/spicybung/DemonFF/wiki).
-
-## Contributing
-
-Contributions are welcome! If you have suggestions, bug reports, or want to contribute code, please check out the [Contributing Guidelines](CONTRIBUTING.md).
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
